@@ -3,20 +3,350 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Polymelo Studio</title>
+<title>Polymelo Studio – 3D assets for Unity</title>
+<meta name="description" content="Polymelo Studio makes ready-to-use 3D assets for Unity. Our first pack, NYC Skyline, has 54 New York-style buildings with a night mode and pre-cut destruction.">
+<link rel="canonical" href="https://polymelostudio.com/">
+<link rel="icon" type="image/png" href="assets/img/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Polymelo Studio">
+<meta property="og:title" content="Polymelo Studio – 3D assets for Unity">
+<meta property="og:description" content="NYC Skyline: 54 New York-style buildings for Unity, with a night mode and pre-cut destruction. Built-in and URP.">
+<meta property="og:url" content="https://polymelostudio.com/">
+<meta property="og:image" content="https://polymelostudio.com/assets/img/og-skyline.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Polymelo Studio","url":"https://polymelostudio.com/",
+ "logo":"https://polymelostudio.com/assets/img/apple-touch-icon.png","email":"support@polymelostudio.com"}
+</script>
 <style>
-  :root { --bg:#f6f4ef; --ink:#1d1c1a; --accent:#c4552d; }
+  :root { --bg:#f6f4ef; --ink:#1d1c1a; --muted:#5f5c56; --line:#dedad1; --card:#fffdf9; --accent:#c4552d; --accent-ink:#fff; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#151514; --ink:#ecebe7; --accent:#e07a52; }
+    :root { --bg:#151514; --ink:#ecebe7; --muted:#a6a39c; --line:#2e2d2a; --card:#1d1d1b; --accent:#e07a52; --accent-ink:#151514; }
   }
-  html, body { height:100%; margin:0; }
-  body { background:var(--bg); color:var(--ink); display:flex; align-items:center; justify-content:center;
-         font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-  h1 { font-size:clamp(2.2rem,8vw,4rem); line-height:1.05; margin:0 16px; letter-spacing:-0.02em; text-align:center; }
-  h1 span { color:var(--accent); }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  img { max-width:100%; height:auto; display:block; }
+  a { color:var(--accent); }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+  h1, h2, h3 { line-height:1.15; letter-spacing:-0.02em; margin:0 0 .5em; }
+  h2 { font-size:clamp(1.7rem,4vw,2.4rem); }
+  h3 { font-size:1.2rem; }
+  p { margin:0 0 1em; }
+  .muted { color:var(--muted); }
+  .logo { font-weight:700; font-size:1.3rem; letter-spacing:-0.02em; color:var(--ink); text-decoration:none; }
+  .dot { color:var(--accent); }
+  .logo .cube { height:.55em; width:auto; margin:0 .06em; vertical-align:baseline; }
+
+  header { border-bottom:1px solid var(--line); }
+  header .wrap { display:flex; align-items:center; justify-content:space-between; gap:16px; height:64px; }
+  nav { display:flex; gap:20px; font-size:.95rem; }
+  nav a { color:var(--ink); text-decoration:none; white-space:nowrap; }
+  nav a:hover { color:var(--accent); }
+
+  .hero { padding:72px 0 56px; }
+  .hero h1 { font-size:clamp(2.4rem,7vw,4.4rem); max-width:14ch; }
+  .hero p { font-size:1.2rem; max-width:40rem; color:var(--muted); }
+
+  section { padding:56px 0; border-top:1px solid var(--line); }
+  .eyebrow { text-transform:uppercase; letter-spacing:.08em; font-size:.8rem; font-weight:600; color:var(--accent); margin-bottom:.6em; }
+  .badge { display:inline-block; font-size:.8rem; font-weight:600; padding:3px 10px; border-radius:999px; border:1px solid var(--accent); color:var(--accent); vertical-align:middle; margin-left:8px; letter-spacing:0; }
+  .btn { display:inline-block; padding:12px 22px; border-radius:8px; background:var(--accent); color:var(--accent-ink); font-weight:600; text-decoration:none; }
+  .btn.ghost { background:none; color:var(--ink); border:1px solid var(--line); }
+  .btn[aria-disabled="true"] { opacity:.6; cursor:default; }
+
+  .product { display:grid; grid-template-columns:1.25fr 1fr; gap:40px; align-items:start; }
+  .product figure { margin:0; }
+  .shot { border-radius:10px; overflow:hidden; border:1px solid var(--line); }
+  .price { font-size:1.4rem; font-weight:700; margin:.2em 0 .8em; }
+  .actions { display:flex; flex-wrap:wrap; gap:12px; margin:1.2em 0; }
+  ul.ticks { padding:0; margin:0 0 1em; list-style:none; }
+  ul.ticks li { padding-left:1.4em; position:relative; margin:.35em 0; }
+  ul.ticks li::before { content:""; position:absolute; left:0; top:.6em; width:.55em; height:.55em; border-radius:2px; background:var(--accent); }
+
+  .gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:32px; }
+  .gallery figure { margin:0; }
+  .gallery figcaption { font-size:.88rem; color:var(--muted); margin-top:6px; }
+
+  .specs { display:grid; grid-template-columns:repeat(2,1fr); gap:0 40px; margin-top:40px; }
+  .specs dl { margin:0; }
+  .specs div { display:flex; justify-content:space-between; gap:16px; padding:10px 0; border-bottom:1px solid var(--line); font-size:.95rem; }
+  .specs dt { color:var(--muted); }
+  .specs dd { margin:0; text-align:right; }
+
+  .samples { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:28px 0; }
+  .sample { background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .sample .pic { height:260px; background:linear-gradient(#a8c7e8,#6e7a88); display:flex; align-items:flex-end; justify-content:center; }
+  .sample .pic img { max-height:100%; width:auto; }
+  .sample .txt { padding:10px 14px 14px; font-size:.9rem; }
+  .sample .txt strong { display:block; font-size:1rem; }
+
+  .cols { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:22px; }
+  .card p:last-child { margin:0; }
+
+  footer { border-top:1px solid var(--line); padding:32px 0 48px; font-size:.9rem; color:var(--muted); }
+  footer .wrap { display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; }
+  footer a { color:var(--muted); }
+
+  @media (max-width:860px) {
+    .product, .specs { grid-template-columns:1fr; }
+    .gallery { grid-template-columns:repeat(2,1fr); }
+    .samples { grid-template-columns:repeat(2,1fr); }
+    .cols { grid-template-columns:1fr; }
+    nav { gap:14px; }
+  }
+  @media (max-width:520px) {
+    nav a.opt { display:none; }
+    .logo { font-size:1.1rem; }
+    .gallery { grid-template-columns:1fr; }
+    .sample .pic { height:200px; }
+    .hero { padding:48px 0 40px; }
+  }
+  /* Lightbox: click any product image to see it full size */
+  main img { cursor:zoom-in; }
+  .vid .play { position:relative; display:block; }
+  .vid .play img { cursor:pointer; }
+  .vid .btn-play { position:absolute; left:50%; top:50%; width:76px; transform:translate(-50%,-50%); transition:transform .15s; }
+  .vid .btn-play path:first-child { fill:var(--accent); opacity:.92; }
+  .vid .play:hover .btn-play, .vid .play:focus-visible .btn-play { transform:translate(-50%,-50%) scale(1.08); }
+  .vid .vid-label { position:absolute; left:12px; bottom:12px; padding:4px 10px; border-radius:6px; background:rgba(12,12,11,.72); color:#ecebe7; font-size:.85rem; }
+  .vid iframe { display:block; width:100%; aspect-ratio:16/9; border:0; }
+  .lb { border:0; padding:0; margin:0; max-width:none; max-height:none; width:100%; height:100%; background:rgba(12,12,11,.92); color:#ecebe7; }
+  .lb::backdrop { background:rgba(12,12,11,.92); }
+  .lb[open] { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+  .lb img { max-width:min(96vw,1600px); max-height:82vh; width:auto; height:auto; cursor:zoom-out; border-radius:6px; }
+  .lb p { margin:0; padding:0 56px; font-size:.95rem; text-align:center; color:#c9c6bf; }
+  .lb button { position:absolute; background:none; border:0; color:#ecebe7; font-size:2.2rem; line-height:1; padding:10px 14px; cursor:pointer; }
+  .lb button:hover, .lb button:focus-visible { color:#e07a52; }
+  .lb .x { top:8px; right:8px; }
+  .lb .prev { left:4px; top:50%; transform:translateY(-50%); }
+  .lb .next { right:4px; top:50%; transform:translateY(-50%); }
 </style>
 </head>
 <body>
-  <h1>Polymelo<span>.</span>Studio</h1>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Polymelo Studio">Polymelo<svg class="cube" viewBox="0 0 86.6 100" aria-hidden="true"><polygon fill="#f09e76" points="43.3,0 0,25 0,75 43.3,50"/><polygon fill="#702a14" points="86.6,75 43.3,50 0,75 43.3,100"/><polygon fill="#973e20" points="86.6,25 43.3,0 43.3,50 86.6,75"/></svg>Studio</a>
+    <nav>
+      <a href="#nyc-skyline">NYC Skyline</a>
+      <a class="opt" href="#free-sample">Free sample</a>
+      <a class="opt" href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <h1>3D assets for Unity, ready to drop in<span class="dot">.</span></h1>
+    <p>Polymelo Studio is an independent studio that makes game-ready 3D environment packs for Unity. Every asset is finished on all sides, kept light on triangles and documented, so it works in your scene from the first drag and drop.</p>
+    <div class="actions">
+      <a class="btn" href="#nyc-skyline">See NYC Skyline</a>
+      <a class="btn ghost" href="#contact">Contact us</a>
+    </div>
+  </div>
+
+  <section id="nyc-skyline">
+    <div class="wrap">
+      <div class="product">
+        <figure class="shot vid">
+          <a class="play" href="https://youtu.be/Q36ypCzRf3o" data-yt="Q36ypCzRf3o" aria-label="Play the NYC Skyline trailer">
+            <img src="assets/img/skyline-cover.jpg" width="1600" height="1067" alt="NYC Skyline towers by day on the left and by night with lit windows on the right">
+            <span class="btn-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path d="M66.5 7.7a8.6 8.6 0 0 0-6-6C55.2.3 34 .3 34 .3s-21.2 0-26.5 1.4a8.6 8.6 0 0 0-6 6C.1 13 .1 24 .1 24s0 11 1.4 16.3a8.6 8.6 0 0 0 6 6c5.3 1.4 26.5 1.4 26.5 1.4s21.2 0 26.5-1.4a8.6 8.6 0 0 0 6-6C67.9 35 67.9 24 67.9 24s0-11-1.4-16.3z"/><path fill="#fff" d="M27 34.3 45 24 27 13.7z"/></svg></span>
+            <span class="vid-label">Watch the trailer</span>
+          </a>
+        </figure>
+        <div>
+          <div class="eyebrow">Unity Asset Store</div>
+          <h2>NYC Skyline <span class="badge">Coming soon</span></h2>
+          <p class="muted">54 New York-style buildings</p>
+          <p>Build a New York skyline in minutes: brownstones and tenements, cast-iron lofts, art deco and gothic towers, limestone hotels, modernist glass and pencil-thin supertalls, from the 1900s to today.</p>
+          <ul class="ticks">
+            <li>Finished on all four sides, with real rooftops: parapets, water tanks, stair bulkheads, AC units and antennas</li>
+            <li>Night mode with lit windows, per building or for the whole scene</li>
+            <li>Pre-cut destruction: every building breaks into ragged chunks with physics</li>
+            <li>Built-in Render Pipeline and URP</li>
+          </ul>
+          <p class="price">$24.99</p>
+          <p class="muted">Currently in review on the Unity Asset Store.</p>
+          <div class="actions">
+            <a class="btn" aria-disabled="true">Available soon on the Asset Store</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <figure>
+          <img class="shot" src="assets/img/skyline-night.jpg" width="1200" height="800" loading="lazy" alt="Night skyline with lit windows">
+          <figcaption>Night mode: hand-made night maps, a natural mix of lit offices and flats</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="assets/img/skyline-day-aerial.jpg" width="1200" height="800" loading="lazy" alt="Aerial view of the showcase city by day">
+          <figcaption>The included showcase scene: all 54 buildings as a small city</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="assets/img/lineup-lowrise.jpg" width="1200" height="800" loading="lazy" alt="Lineup of the low-rise buildings with heights and triangle counts">
+          <figcaption>11 low-rises: brownstones, tenements, shops, a school</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="assets/img/lineup-towers-tall.jpg" width="1200" height="800" loading="lazy" alt="Lineup of tall towers with heights and triangle counts">
+          <figcaption>43 towers, up to 326 m tall</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="assets/img/collapse-night.jpg" width="1200" height="800" loading="lazy" alt="A tower collapsing into chunks at night">
+          <figcaption>One method call breaks a building apart, windows flicker and go dark</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="assets/img/wireframe.jpg" width="1200" height="800" loading="lazy" alt="Wireframe view of five buildings">
+          <figcaption>Low poly: 65,566 triangles for all 54 buildings together</figcaption>
+        </figure>
+      </div>
+
+      <div class="specs">
+        <dl>
+          <div><dt>Unity version</dt><dd>6000.3 or newer</dd></div>
+          <div><dt>Render pipelines</dt><dd>Built-in and URP</dd></div>
+          <div><dt>Buildings</dt><dd>54 prefabs from 34 designs</dd></div>
+          <div><dt>Heights</dt><dd>7 to 326 m, 1 unit = 1 metre</dd></div>
+          <div><dt>Triangles (LOD0)</dt><dd>270 to 2,770 per building</dd></div>
+          <div><dt>LODs</dt><dd>2 per building</dd></div>
+        </dl>
+        <dl>
+          <div><dt>Colliders</dt><dd>Mesh colliders, convex on chunks</dd></div>
+          <div><dt>Destruction</dt><dd>54 chunk prefabs, up to 64 chunks each</dd></div>
+          <div><dt>Textures</dt><dd>22 tiling facades with normal and night maps</dd></div>
+          <div><dt>Scripts</dt><dd>C# with source, both input systems</dd></div>
+          <div><dt>Demo</dt><dd>Showcase scene with fly camera</dd></div>
+          <div><dt>Documentation</dt><dd>README included</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="free-sample">
+    <div class="wrap">
+      <div class="eyebrow">Free</div>
+      <h2>NYC Skyline Sample <span class="badge">In development</span></h2>
+      <p style="max-width:44rem">A free pack with 4 buildings from NYC Skyline, so you can try the style, scale and quality in your own project before you buy. Same models, materials and documentation as the full pack.</p>
+      <div class="samples">
+        <div class="sample">
+          <div class="pic"><img src="assets/img/sample-brownstonecorner.jpg" width="600" height="477" loading="lazy" alt="Brownstone corner building"></div>
+          <div class="txt"><strong>Brownstone Corner</strong><span class="muted">33 m · 430 triangles</span></div>
+        </div>
+        <div class="sample">
+          <div class="pic"><img src="assets/img/sample-tanbricksetback.jpg" width="300" height="744" loading="lazy" alt="Tan brick setback tower"></div>
+          <div class="txt"><strong>Tan Brick Setback</strong><span class="muted">102 m · 1,802 triangles</span></div>
+        </div>
+        <div class="sample">
+          <div class="pic"><img src="assets/img/sample-greenglasssetback.jpg" width="342" height="744" loading="lazy" alt="Green glass setback tower"></div>
+          <div class="txt"><strong>Green Glass Setback</strong><span class="muted">241 m · 1,768 triangles</span></div>
+        </div>
+        <div class="sample">
+          <div class="pic"><img src="assets/img/sample-decospire.jpg" width="342" height="744" loading="lazy" alt="Art deco tower with a spire"></div>
+          <div class="txt"><strong>Deco Spire</strong><span class="muted">278 m · 2,222 triangles</span></div>
+        </div>
+      </div>
+      <p class="muted">Night mode is part of the full pack. Contents of the free pack may still change before release.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="eyebrow">About</div>
+      <h2>How we make our assets</h2>
+      <div class="cols">
+        <div class="card">
+          <h3>Built for real projects</h3>
+          <p>Every pack is tested in Unity before release: prefabs with sensible pivots and real-world scale, LODs and colliders set up, and validated with Unity's Asset Store tools.</p>
+        </div>
+        <div class="card">
+          <h3>Original designs</h3>
+          <p>Our buildings are inspired by architectural styles, not copied from real buildings. No model is a replica of a real, named building, and textures are checked by hand for text, logos and signs.</p>
+        </div>
+        <div class="card">
+          <h3>Open about our tools</h3>
+          <p>The 3D models are built procedurally in Blender from hand-written building specs. Concept art and facade textures were made with the help of AI image generation (FLUX.1 [dev]) and reviewed by hand.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="eyebrow">Contact</div>
+      <h2>Support and questions</h2>
+      <p style="max-width:44rem">Questions about a pack, a bug report or a feature request: email us and include your Unity version and render pipeline. Purchases and refunds are handled by the Unity Asset Store under its terms.</p>
+      <div class="actions">
+        <a class="btn" href="mailto:support@polymelostudio.com">support@polymelostudio.com</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Polymelo Studio. All rights reserved.<br>Text, images and logos on this site may not be copied or reused without written permission.</div>
+    <div>This site sets no cookies and uses no analytics. The trailer loads from YouTube (privacy-enhanced mode) only when you press play. It is hosted on GitHub Pages (<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub privacy statement</a>).</div>
+  </div>
+</footer>
+
+<dialog class="lb" aria-label="Image viewer">
+  <button class="x" type="button" aria-label="Close">&times;</button>
+  <button class="prev" type="button" aria-label="Previous image">&lsaquo;</button>
+  <img alt="">
+  <p></p>
+  <button class="next" type="button" aria-label="Next image">&rsaquo;</button>
+</dialog>
+<script>
+(function () {
+  var lb = document.querySelector(".lb"), big = lb.querySelector("img"), cap = lb.querySelector("p");
+  var imgs = Array.prototype.slice.call(document.querySelectorAll("main img:not(.vid img)")), i = 0;
+  if (!lb.showModal) return;   // very old browsers: images just stay as they are
+  function show(n) {
+    i = (n + imgs.length) % imgs.length;
+    var im = imgs[i], fc = im.closest("figure") && im.closest("figure").querySelector("figcaption");
+    big.src = im.currentSrc || im.src; big.alt = im.alt;
+    cap.textContent = fc ? fc.textContent : im.alt;
+  }
+  imgs.forEach(function (im, n) {
+    im.tabIndex = 0;
+    im.addEventListener("click", function () { show(n); lb.showModal(); });
+    im.addEventListener("keydown", function (e) { if (e.key === "Enter") { show(n); lb.showModal(); } });
+  });
+  lb.querySelector(".prev").onclick = function () { show(i - 1); };
+  lb.querySelector(".next").onclick = function () { show(i + 1); };
+  lb.querySelector(".x").onclick = function () { lb.close(); };
+  big.onclick = function () { lb.close(); };
+  lb.addEventListener("click", function (e) { if (e.target === lb) lb.close(); });
+  lb.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") show(i - 1);
+    if (e.key === "ArrowRight") show(i + 1);
+  });
+  // Trailer: the cover is a link to YouTube; with JS, clicking it swaps in the player and starts it
+  var play = document.querySelector(".vid .play");
+  play.addEventListener("click", function (e) {
+    if (location.protocol === "file:") return;   // YouTube refuses embeds without a referrer (error 153): open it on YouTube
+    e.preventDefault();
+    var f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + play.dataset.yt + "?autoplay=1&rel=0";
+    f.title = "NYC Skyline trailer";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    f.referrerPolicy = "strict-origin-when-cross-origin";   // YouTube needs the site's origin as referrer
+    play.replaceWith(f);
+  });
+  var x0 = null;   // swipe left/right on phones
+  lb.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1));
+  });
+})();
+</script>
+
 </body>
 </html>
